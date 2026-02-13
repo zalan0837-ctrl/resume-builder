@@ -79,9 +79,9 @@
 
   // AI 设置（内置配置，无需前端手动设置）
   const aiSettings = {
-    baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
-    apiKey: 'sk-56c4ce25f27b468ab886e229223d864c',
-    model: 'qwen-plus'
+    baseUrl: 'https://open.bigmodel.cn/api/paas/v4',
+    apiKey: '51270b3636514f9190d2bb92a208ccdd.eR0Bp53sPlo5afJf',
+    model: 'glm-4-flash'
   };
   // 当前正在进行AI优化的目标textarea信息
   let currentAITarget = null;
