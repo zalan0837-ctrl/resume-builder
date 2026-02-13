@@ -13,7 +13,6 @@
       <h1 class="logo">📄 简历生成器</h1>
     </div>
     <div class="toolbar-right">
-      <button id="btn-ai-settings" class="btn btn-secondary" title="配置 AI API Key">🤖 AI 设置</button>
       <button id="btn-reset" class="btn btn-secondary" title="清空所有内容">重置</button>
       <button id="btn-export" class="btn btn-primary" title="导出为Word文档">导出 Word</button>
     </div>
@@ -222,35 +221,6 @@
 
   <!-- 保存提示 -->
   <div id="save-toast" class="save-toast">✓ 已自动保存</div>
-
-  <!-- AI 设置弹窗 -->
-  <div id="ai-settings-modal" class="modal-overlay" style="display:none;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3>🤖 AI 设置</h3>
-        <button class="modal-close" id="btn-close-ai-settings">✕</button>
-      </div>
-      <div class="modal-body">
-        <p class="modal-tip">配置 AI API 以启用"AI 优化"功能。支持任何兼容 OpenAI 格式的 API。</p>
-        <div class="form-group full-width">
-          <label>API 地址（Base URL）</label>
-          <input type="text" id="ai-base-url" placeholder="如：https://api.openai.com/v1">
-        </div>
-        <div class="form-group full-width" style="margin-top:12px;">
-          <label>API Key</label>
-          <input type="password" id="ai-api-key" placeholder="请输入你的 API Key">
-        </div>
-        <div class="form-group full-width" style="margin-top:12px;">
-          <label>模型名称</label>
-          <input type="text" id="ai-model" placeholder="如：gpt-3.5-turbo">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-secondary" id="btn-cancel-ai-settings">取消</button>
-        <button class="btn btn-primary" id="btn-save-ai-settings">保存设置</button>
-      </div>
-    </div>
-  </div>
 
   <!-- AI 优化结果弹窗 -->
   <div id="ai-result-modal" class="modal-overlay" style="display:none;">

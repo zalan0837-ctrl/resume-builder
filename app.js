@@ -18,7 +18,7 @@
   // 常量与配置
   // =====================
   const STORAGE_KEY = 'resume_builder_data';
-  const AI_SETTINGS_KEY = 'resume_builder_ai_settings';
+  // AI 设置已内置，不再需要 localStorage key
 
   // 模块显示名称映射
   const MODULE_NAMES = {
@@ -77,8 +77,12 @@
   let resumeData = getDefaultData();
   let saveTimer = null;
 
-  // AI 设置
-  let aiSettings = loadAISettings();
+  // AI 设置（内置配置，无需前端手动设置）
+  const aiSettings = {
+    baseUrl: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+    apiKey: 'sk-56c4ce25f27b468ab886e229223d864c',
+    model: 'qwen-plus'
+  };
   // 当前正在进行AI优化的目标textarea信息
   let currentAITarget = null;
 
@@ -97,12 +101,7 @@
   const deletedModulesList = document.getElementById('deleted-modules-list');
 
   // AI 相关 DOM
-  const btnAISettings = document.getElementById('btn-ai-settings');
-  const aiSettingsModal = document.getElementById('ai-settings-modal');
   const aiResultModal = document.getElementById('ai-result-modal');
-  const aiBaseUrlInput = document.getElementById('ai-base-url');
-  const aiApiKeyInput = document.getElementById('ai-api-key');
-  const aiModelInput = document.getElementById('ai-model');
   const aiLoading = document.getElementById('ai-loading');
   const aiResultContent = document.getElementById('ai-result-content');
   const aiResultFooter = document.getElementById('ai-result-footer');
@@ -124,7 +123,6 @@
     restoreDeletedModules();
     restoreFormValues();
     updatePhotoUI();
-    restoreAISettings();
   }
 
   // =====================
@@ -979,65 +977,10 @@
   // AI 优化功能
   // =====================
 
-  /** 加载 AI 设置 */
-  function loadAISettings() {
-    try {
-      const saved = localStorage.getItem(AI_SETTINGS_KEY);
-      if (saved) return JSON.parse(saved);
-    } catch (e) {
-      console.warn('加载AI设置失败:', e);
-    }
-    return { baseUrl: '', apiKey: '', model: 'gpt-3.5-turbo' };
-  }
-
-  /** 保存 AI 设置 */
-  function saveAISettings() {
-    aiSettings = {
-      baseUrl: aiBaseUrlInput.value.trim(),
-      apiKey: aiApiKeyInput.value.trim(),
-      model: aiModelInput.value.trim() || 'gpt-3.5-turbo'
-    };
-    try {
-      localStorage.setItem(AI_SETTINGS_KEY, JSON.stringify(aiSettings));
-    } catch (e) {
-      console.warn('保存AI设置失败:', e);
-    }
-  }
-
-  /** 恢复 AI 设置到表单 */
-  function restoreAISettings() {
-    if (aiBaseUrlInput) aiBaseUrlInput.value = aiSettings.baseUrl || '';
-    if (aiApiKeyInput) aiApiKeyInput.value = aiSettings.apiKey || '';
-    if (aiModelInput) aiModelInput.value = aiSettings.model || 'gpt-3.5-turbo';
-  }
+  // AI 设置已内置，无需加载/保存/恢复
 
   /** 绑定 AI 相关事件 */
   function bindAIEvents() {
-    // AI 设置弹窗
-    btnAISettings.addEventListener('click', () => {
-      restoreAISettings();
-      aiSettingsModal.style.display = 'flex';
-    });
-
-    document.getElementById('btn-close-ai-settings').addEventListener('click', () => {
-      aiSettingsModal.style.display = 'none';
-    });
-
-    document.getElementById('btn-cancel-ai-settings').addEventListener('click', () => {
-      aiSettingsModal.style.display = 'none';
-    });
-
-    document.getElementById('btn-save-ai-settings').addEventListener('click', () => {
-      saveAISettings();
-      aiSettingsModal.style.display = 'none';
-      showSaveToast();
-    });
-
-    // 点击遮罩关闭设置弹窗
-    aiSettingsModal.addEventListener('click', (e) => {
-      if (e.target === aiSettingsModal) aiSettingsModal.style.display = 'none';
-    });
-
     // AI 结果弹窗
     document.getElementById('btn-close-ai-result').addEventListener('click', () => {
       aiResultModal.style.display = 'none';
@@ -1067,12 +1010,6 @@
 
   /** 处理 AI 优化按钮点击 */
   function handleAIOptimize(btn) {
-    // 检查 AI 设置
-    if (!aiSettings.baseUrl || !aiSettings.apiKey) {
-      alert('请先点击顶部「🤖 AI 设置」配置 API 地址和 API Key。');
-      return;
-    }
-
     let originalText = '';
     let context = btn.dataset.aiContext || '简历内容';
 
